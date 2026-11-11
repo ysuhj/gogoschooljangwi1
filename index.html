@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>빗물받이 탐험대 · 북가좌동 · 4학년 새싹반</title>
+<title>빗물받이 탐험대 · 4학년 장위초등학교</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌧️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -316,17 +316,15 @@ details.changes summary{cursor:pointer;font-weight:700}
       <h2 class="q">출발 전에 약속해요!</h2>
       <p class="sub">안전하게 조사해야 진짜 탐험대예요.</p>
       <ul class="promise">
-        <li><span class="e" aria-hidden="true">🚸</span>인도로만 다니고 찻길로 내려가지 않아요. 찻길 쪽 빗물받이는 인도에서 찍어요.</li>
-        <li><span class="e" aria-hidden="true">🚦</span>길을 건널 때는 횡단보도에서 초록불에만 건너요.</li>
-        <li><span class="e" aria-hidden="true">👀</span>선생님이나 가족 어른과 함께 다니고, 함께 간 사람과 떨어지지 않아요.</li>
+        <li><span class="e" aria-hidden="true">🚸</span>주차장이나 차가 다니는 길에는 들어가지 않아요.</li>
+        <li><span class="e" aria-hidden="true">⚽</span>운동장에서 노는 친구들과 날아오는 공을 조심해요.</li>
         <li><span class="e" aria-hidden="true">✋</span>빗물받이 뚜껑이나 쓰레기는 맨손으로 만지지 않아요.</li>
-        <li><span class="e" aria-hidden="true">🙈</span>사람 얼굴, 자동차 번호판, 집 안은 찍지 않아요.</li>
-        <li><span class="e" aria-hidden="true">🚗</span>골목에서 나오는 차와 공사장을 조심하고, 공사장 울타리 안에는 들어가지 않아요.</li>
-        <li><span class="e" aria-hidden="true">🏪</span>가게 앞에서는 손님과 지나가는 사람을 막지 않게 비켜서 찍어요.</li>
+        <li><span class="e" aria-hidden="true">👀</span>선생님과 함께 다니고, 모둠 친구와 떨어지지 않아요.</li>
+        <li><span class="e" aria-hidden="true">🙈</span>사람 얼굴이나 자동차 번호판은 찍지 않아요.</li>
+        <li><span class="e" aria-hidden="true">🤫</span>수업 중인 교실 근처에서는 조용히 다녀요.</li>
       </ul>
       <div class="mode-note"><span class="e" aria-hidden="true">📸🔍</span><span>밖에서는 빗물받이를 <b>찍고</b> <b>위치 → 막힌 정도 → 쓰레기 → 주변</b>까지 기록해요. <b>왜 막혔는지</b>는 교실에서 위쪽의 <b>🤔 원인 살펴보기</b>로 함께 생각해요.</span></div>
-      <h3 class="sec-h">오늘의 조사는 누구와 함께해요?</h3>
-      <div class="tiles phase" id="phaseTiles" style="margin-bottom:18px"></div>
+      <div class="tiles phase hide" id="phaseTiles"></div>
       <h3 class="sec-h">우리는 몇 모둠이에요?</h3>
       <div class="tiles" id="groupTiles" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px"></div>
       <div class="say" id="groupSay"></div>
@@ -355,7 +353,7 @@ details.changes summary{cursor:pointer;font-weight:700}
       <div class="say" id="locSay"></div>
       <div class="field">
         <label for="placeInput">어디인지 짧게 적어요 (안 적어도 돼요)</label>
-        <input type="text" id="placeInput" maxlength="60" placeholder="예: ○○마트 앞 버스정류장 옆">
+        <input type="text" id="placeInput" maxlength="60" placeholder="예: 본관 현관 앞 화단 옆">
       </div>
     </div>
 
@@ -409,7 +407,7 @@ details.changes summary{cursor:pointer;font-weight:700}
         <div class="say" id="xSay"></div>
       </div>
       <div id="envMap" class="envmap" aria-label="빗물받이 주변 지도"></div>
-      <p class="envcap">📍가 이 빗물받이 자리예요. 주변에 가게, 버스정류장, 큰길, 공원이 있는지 사진과 지도를 함께 살펴봐요.</p>
+      <p class="envcap">📍가 이 빗물받이 자리예요. 주변에 운동장, 화단, 건물 입구가 있는지 사진과 지도를 함께 살펴봐요.</p>
       <div class="tiles three" id="envTiles"></div>
       <p class="pickcount" id="envCount" aria-live="polite"></p>
       <div class="field">
@@ -487,7 +485,7 @@ details.changes summary{cursor:pointer;font-weight:700}
 
   <section id="view-results" class="hide" aria-label="우리 반 결과">
     <div class="rbar">
-      <label style="display:flex;gap:8px;align-items:center;font-weight:700">보기 <select id="resPhase" aria-label="누구와 조사했는지"></select></label>
+      <label style="display:none;gap:8px;align-items:center;font-weight:700">보기 <select id="resPhase" aria-label="누구와 조사했는지"></select></label>
       <div class="r"><button type="button" class="sbtn" id="csvBtn">⬇️ 표로 내려받기(CSV)</button><button type="button" class="sbtn" data-refresh>🔄 새로 보기</button></div>
     </div>
     <div id="resultsBody"></div>
@@ -534,11 +532,11 @@ details.changes summary{cursor:pointer;font-weight:700}
   "use strict";
   /* ===== 선생님이 바꿀 수 있는 설정 ===== */
   // 새 Code.gs를 배포한 뒤 그 웹 앱 URL(끝이 /exec)을 넣어야 해요.
-  const API_URL = "https://script.google.com/macros/s/AKfycbyDQyvVTxvQAgvWZJPoN9ebddUrbR-71KK2zVqEeZkSVGpbR9yGLrKFvAzsTqGT2aWQ/exec";
-  const DEFAULT_CENTER = [37.578689, 126.907504]; // 처음 지도를 열 때 보여줄 곳: 북가좌동 (서울북가좌초등학교)
-  const CLASS_ID = "4-새싹";                  // 시트에 저장되는 반 이름 (바꾸면 기록이 따로 모여요)
-  const CLASS_LABEL = "4학년 새싹반";          // 화면에 보이는 반 이름
-  const GROUP_COUNT = 6;                      // 모둠 수 (주소에 &groups=4 처럼 붙여도 돼요, 최대 8)
+  const API_URL = "https://script.google.com/macros/s/AKfycbxvlDkJopAHn3yrQFrW-XYTVmNoWr63MwwOKkwtv2iZwZQL2DJHDY3iu003Ff5Yd1M/exec";
+  const DEFAULT_CENTER = [37.611981, 127.049921]; // 처음 지도를 열 때 보여줄 곳: 서울장위초등학교
+  const CLASS_ID = "장위-4";                    // 시트에 저장되는 반 이름 (바꾸면 기록이 따로 모여요)
+  const CLASS_LABEL = "4학년 장위초등학교";          // 화면에 보이는 반 이름
+  const GROUP_COUNT = 3;                      // 모둠 수 (주소에 &groups=4 처럼 붙여도 돼요, 최대 8)
   const GRADE_CUT = [25, 55];                 // 색칠 비율(%) 기준: 25% 미만 원활 / 55% 미만 일부 막힘 / 그 이상 많이 막힘
   const DUP_METERS = 5;                       // 이 거리 안에 같은 단계 기록이 있으면 '같은 빗물받이일 수 있어요' 안내
   /* ===================================== */
@@ -548,22 +546,22 @@ details.changes summary{cursor:pointer;font-weight:700}
   const qs = new URLSearchParams(location.search);
   const CLS = CLASS_ID; // 반을 4학년 새싹반으로 고정
   // 같은 저장소를 '동네 조사(town)'와 '학교 안 조사(school)' 두 앱이 함께 써요. 기록은 조사 장소(phase)로 나눠 보여요.
-  const APP_VERSION = "town";
+  const APP_VERSION = "school";
   const VERSION_NAME = APP_VERSION === "school" ? "학교 안 조사" : "북가좌동 조사";
   const inVersion = ph => APP_VERSION === "school" ? ph === "school" : ph !== "school";
   const GROUP_EMOJI = ["🐬","🦊","🐢","🦁","🐼","🐸","🦉","🐝"];
   const nGroups = Math.max(1, Math.min(8, parseInt(qs.get("groups"), 10) || GROUP_COUNT));
   const GROUPS = GROUP_EMOJI.slice(0, nGroups).map((e, i) => [(i + 1) + "모둠", e]);
   // 누구와 조사했나요? 수업 시간(모둠)과 가족 과제를 나눠 모아요. [키, 그림, 결과에 보이는 이름, 첫 화면 버튼 글]
-  const PHASES = [["near","👫","수업 시간 (모둠)","모둠 친구들과 함께해요"],["family","👨‍👩‍👧","가족 과제","가족과 함께해요"]];
-  const PHASES_ALL = [...PHASES, ["practice","✏️","연습"], ["school","🏫","학교 안"]];  // 예전 기록도 이름이 보이게
+  const PHASES = [["school","🏫","학교 안","학교 안을 조사해요"]]; // 학교 버전: 연습·가족 과제 없이 '학교 안' 하나
+  const PHASES_ALL = [...PHASES, ["near","👫","수업 시간 (모둠)"], ["family","👨‍👩‍👧","가족 과제"], ["practice","✏️","연습"]];
   const P = Object.fromEntries(PHASES_ALL.map(([k,e,l]) => [k,{e,l}]));
   const TYPES = [["butt","🚬","담배꽁초"],["leaf","🍂","낙엽·나뭇가지"],["vinyl","🛍️","비닐·과자봉지"],["plastic","🥤","컵·캔·병"],["paper","📄","종이·전단지"],["soil","🟫","흙·모래"],["food","🍙","음식물"],["debris","🧱","공사 자재·시멘트 조각"],["etc","❓","기타"]];
   const T = Object.fromEntries(TYPES.map(([k,e,l]) => [k,{e,l}]));
-  const ENVS = [["shop","🏪","가게·식당 앞"],["house","🏠","주택가 골목"],["road","🚗","큰 찻길 옆"],["bus","🚌","버스정류장 근처"],["station","🚉","역 근처"],["build","🏗️","공사장 옆"],["park","🌳","공원·나무 옆"],["school","🏫","학교 앞"],["etc","📍","그 밖의 곳"]];
-  const ENVS_OLD = [["garden","🌳","화단·나무 옆"],["door","🚪","건물 입구 옆"],["path","🚶","학생들이 다니는 길"],["gate","🏫","교문 근처"]]; // 예전 '학교 안' 기록용
+  const ENVS = [["ground","⚽","운동장 옆"],["garden","🌳","화단·나무 옆"],["door","🚪","건물 입구 옆"],["path","🚶","학생들이 다니는 길"],["road","🚗","주차장·차 다니는 길"],["gate","🏫","교문 근처"],["etc","📍","그 밖의 곳"]];
+  const ENVS_OLD = [["build","🏗️","공사장 옆"],["shop","🏪","가게·식당 앞"],["house","🏠","주택가 골목"],["bus","🚌","버스정류장 근처"],["station","🚉","역 근처"],["park","🌳","공원·나무 옆"],["school","🏫","학교 앞"]]; // 다른 버전 기록용
   const E = Object.fromEntries([...ENVS, ...ENVS_OLD].map(([k,e,l]) => [k,{e,l}]));
-  const REASONS = [["tree","🌳","나무·화단이 가까워서"],["people","🚶","사람이 많이 다녀서"],["shop","🏪","가게·식당이 가까워서"],["smoke","🚬","담배 피우는 사람이 많아서"],["build","🏗️","공사장 흙·먼지가 쓸려 와서"],["bin","🗑️","쓰레기통이 없어서"],["slope","⛰️","비탈이라 흙·물이 모여서"],["cover","🙅","덮개로 덮여 있어서"],["unknown","🤔","잘 모르겠어요"],["etc","✏️","다른 생각"]];
+  const REASONS = [["tree","🌳","나무·화단이 가까워서"],["people","🚶","학생들이 많이 다녀서"],["sand","⚽","운동장 흙·모래가 쓸려 와서"],["bin","🗑️","쓰레기통이 없어서"],["slope","⛰️","비탈이라 흙·물이 모여서"],["cover","🙅","덮개로 덮여 있어서"],["unknown","🤔","잘 모르겠어요"],["etc","✏️","다른 생각"]];
   // 막혀 있지 않은 빗물받이: 왜 깨끗할까?
   const CLEAN_REASONS = [["c_clean","🧹","누군가 자주 청소해서"],["c_bin","🗑️","근처에 쓰레기통이 있어서"],["c_few","🚶","지나다니는 사람이 적어서"],["c_notree","🌿","주변에 나무·흙이 적어서"],["c_rain","🌧️","최근 비에 쓸려 내려가서"],["c_open","🔲","덮개 없이 잘 열려 있어서"],["unknown","🤔","잘 모르겠어요"],["etc","✏️","다른 생각"]];
   const R = Object.fromEntries([...REASONS, ...CLEAN_REASONS, ["notclog","😀","막혀 있지 않았어요"]].map(([k,e,l]) => [k,{e,l}]));
@@ -628,7 +626,7 @@ details.changes summary{cursor:pointer;font-weight:700}
     rsel:new Set(), rclear:false, rId:null, iFilter:{ team:null, status:"todo" }, lastMode:"survey" };
   let team = store.get("drain-group") || "";
   if (team && !GROUPS.some(g => g[0] === team)) team = "";
-  const okPhase = k => PHASES.some(p => p[0] === k) ? k : "near";
+  const okPhase = k => "school";
   let phase = okPhase(store.get("drain-phase"));
   const newDraft = () => ({ photo:null, thumb:null, photoChanged:false, privacyOk:false, extras:[], extrasChanged:false, extrasOk:false, cells:new Set(), types:new Set(), butts:0, buttsTouched:false, lid:null, lat:null, lng:null, src:"", envs:new Set(), reasons:new Set() });
   let draft = newDraft();
@@ -686,7 +684,7 @@ details.changes summary{cursor:pointer;font-weight:700}
   }
   $("#phaseTiles").onclick = ev => { const b = ev.target.closest(".tile"); if (!b) return; phase = b.dataset.k; store.set("drain-phase", phase); $("#groupSay").textContent = ""; renderStart(); };
   $("#groupTiles").onclick = ev => { const b = ev.target.closest(".tile"); if (!b) return; team = b.dataset.k; store.set("drain-group", team); $("#groupSay").textContent = ""; renderStart(); };
-  $("#demoBadge").innerHTML = hasGAS ? "" : `<span class="badge" title="index.html의 API_URL을 확인하세요">저장소 연결 안 됨</span>`;
+  $("#demoBadge").innerHTML = hasGAS ? `<span class="badge">🏫 학교 안</span>` : `<span class="badge" title="school.html의 API_URL을 확인하세요">저장소 연결 안 됨</span>`;
   renderStart();
   $("#promiseBtn").onclick = () => {
     if (!phase) return nudge($("#groupSay"), "먼저 오늘 조사할 곳을 눌러요.");
@@ -966,7 +964,7 @@ details.changes summary{cursor:pointer;font-weight:700}
   }
 
   const FILTERS = [
-    ["phase", "누구와", [["real","수업과 과제 모두"], ["all","예전 연습 기록까지"], ...PHASES_ALL.filter(([k]) => inVersion(k)).map(([k,e,l]) => [k, e + " " + l])]],
+    ["phase", "누구와", [["real","학교 안 모두"], ...PHASES_ALL.filter(([k]) => inVersion(k)).map(([k,e,l]) => [k, e + " " + l])]],
     ["team", "모둠", [["all","모든 모둠"], ...GROUPS.map(([g,e]) => [g, e + " " + g])]],
     ["grade", "상태", [["all","모든 상태"], ...GR.map((g,i) => [String(i), g.e + " " + g.l]), ["todo","🔍 살펴보기 전"]]],
     ["env", "주변", [["all","모든 곳"], ...ENVS.map(([k,e,l]) => [k, e + " " + l])]],
@@ -1235,7 +1233,7 @@ details.changes summary{cursor:pointer;font-weight:700}
     const nPr = allReports().filter(r => r.phase === "practice").length;
     el.innerHTML = `<p class="ok">👩‍🏫 선생님 모드가 켜져 있어요. 기록을 눌러 고치거나 지울 수 있어요.</p>
       <p class="small">이 앱은 ${esc(CLASS_LABEL)} ${VERSION_NAME} 전용이에요. 모둠 수를 바꾸려면 주소 끝에 <code>?groups=${nGroups}</code>처럼 붙여요.</p>
-      <div class="tbtns"><button type="button" class="sbtn" id="purgeBtn">✏️ 연습 기록 ${nPr}개 모두 지우기</button><button type="button" class="sbtn" id="tOff">선생님 모드 끄기</button></div>
+      <div class="tbtns"><button type="button" class="sbtn hide" id="purgeBtn">✏️ 연습 기록 ${nPr}개 모두 지우기</button><button type="button" class="sbtn" id="tOff">선생님 모드 끄기</button></div>
       <p class="small">지운 기록은 구글 시트에 '지움' 표시만 되어 남아 있어서, 필요하면 시트에서 되살릴 수 있어요.</p>`;
     $("#purgeBtn").onclick = async () => {
       if (!nPr || !confirm(`연습 기록 ${nPr}개를 모두 지울까요?`)) return;
