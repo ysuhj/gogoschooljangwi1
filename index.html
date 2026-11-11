@@ -614,7 +614,7 @@ details.changes summary{cursor:pointer;font-weight:700}
     if (!hasGAS) { const e = new Error("저장소 주소(API_URL)가 설정되지 않았어요. 선생님께 알려 주세요."); e.server = true; throw e; }
     let res;
     const opt = { credentials: "omit", redirect: "follow" };
-    if (action === "list" || action === "photo") res = await fetch(API_URL.trim() + "?" + new URLSearchParams({ action, cls: CLS, owner, ...(extra.id ? { id: extra.id } : {}) }), opt);
+    if (action === "list" || action === "photo") res = await fetch(API_URL.trim() + "?" + new URLSearchParams({ action, cls: CLS, owner, ...(extra.id ? { id: extra.id } : {}), ...(extra.idx !== undefined ? { idx: String(extra.idx) } : {}) }), opt);
     else res = await fetch(API_URL.trim(), { ...opt, method: "POST", body: JSON.stringify(body) }); // text/plain → 추가 확인 요청 없음
     const j = await res.json();
     if (!j.ok) { const e = new Error(j.error || "요청 실패"); e.server = true; throw e; }
@@ -785,10 +785,15 @@ details.changes summary{cursor:pointer;font-weight:700}
   }
   async function extrasView(el, r) {
     const n = +r.extraCount || 0; if (!el) return;
+    el.dataset.rid = r.id;
     if (!n) { el.innerHTML = ""; return; }
     el.innerHTML = `<div class="xview"><h4>📷 주변 사진 ${n}장</h4><div class="xgrid">${Array.from({ length: n }, (_, i) => `<img alt="주변 사진 ${i + 1}" data-i="${i}">`).join("")}</div></div>`;
     el.onclick = e => { const im = e.target.closest(".xgrid img"); if (im) im.classList.toggle("big"); };
-    for (let i = 0; i < n; i++) { const src = await extraPhoto(r, i); const im = el.querySelector(`img[data-i="${i}"]`); if (im && src) im.src = src; }
+    for (let i = 0; i < n; i++) {
+      const src = await extraPhoto(r, i);
+      if (el.dataset.rid !== r.id) return; // 그새 다른 기록을 열었으면 멈춰요
+      const im = el.querySelector(`img[data-i="${i}"]`); if (im && src) im.src = src;
+    }
   }
   async function handleFile(file, input) {
     if (!file) return;
@@ -1245,6 +1250,7 @@ details.changes summary{cursor:pointer;font-weight:700}
   /* ---------- detail ---------- */
   async function openDetail(id) {
     const r = state.reports.get(id); if (!r) return;
+    state.dlgId = id;
     const dlg = $("#detail"), body = $("#dlgBody"), g = GR[gOf(r)];
     const own = !r.pending && (r.mine || state.teacher), done = isDone(r);
     const btns = [];
@@ -1278,7 +1284,7 @@ details.changes summary{cursor:pointer;font-weight:700}
     }
     if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open","");
     const full = await fullPhoto(r);
-    const ph = $("#dlgPhoto"); if (!ph || !dlg.open) return;
+    const ph = $("#dlgPhoto"); if (!ph || !dlg.open || state.dlgId !== id) return;
     const src = full || r.thumb;
     if (src) ph.innerHTML = viewPhoto(src, r, done);
     extrasView($("#dlgExtras"), r);
